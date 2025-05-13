@@ -11,7 +11,7 @@
 
 ## Installation
 
-1. Clone this repository or import it as a `.unitypackage` into your Unity project.
+1. Clone this repository or [download the latest `.unitypackage`](https://github.com/hibisceae/SpreadSheetToScriptableObject/releases/latest) and import it into your Unity project.
 2. Enable the **Google Sheets API** in your [Google Cloud Console](https://console.cloud.google.com/).
 3. Generate an API Key and prepare your spreadsheet for public or API access.
 
