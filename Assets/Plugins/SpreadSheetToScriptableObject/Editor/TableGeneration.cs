@@ -139,11 +139,20 @@ namespace SpreadSheetToScriptableObject
 
         private static void SyncData(TableGenSetting pSetting, String pSheetName, List<List<String>> pData, List<(String, String)> pHeaders)
         {
-            Type rowType = Type.GetType($"{pSetting.NameSpace}.{pSheetName}Row,Assembly-CSharp");
-            Type assetType = Type.GetType($"{pSetting.NameSpace}.{pSheetName}Asset,Assembly-CSharp");
+            Type rowType = null, assetType = null;
+
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (Assembly assembly in assemblies)
+            {
+                rowType = Type.GetType($"{pSetting.NameSpace}.{pSheetName}Row,{assembly.GetName().Name}");
+                assetType = Type.GetType($"{pSetting.NameSpace}.{pSheetName}Asset,{assembly.GetName().Name}");
+
+                if (rowType != null && assetType != null) break;
+            }
+
             if (rowType == null || assetType == null)
             {
-                Debug.LogError($"Could not find type of {pSheetName}row or {pSheetName}asset. please generate code first.");
+                Debug.LogError($"Could not find type of {pSheetName}Row or {pSheetName}Asset. please generate code first.");
                 return;
             }
 
